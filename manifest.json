@@ -1,0 +1,17 @@
+{
+  "name": "Cart AI",
+  "short_name": "Cart AI",
+  "description": "Find the best place to buy anything",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%231c1c1e'/><circle cx='72' cy='168' r='10' fill='white'/><circle cx='160' cy='168' r='10' fill='white'/><path d='M8 8h32l21.44 107.12a16 16 0 0 0 16 12.88h77.76a16 16 0 0 0 16-12.88L184 48H48' stroke='white' stroke-width='14' fill='none' stroke-linecap='round'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
