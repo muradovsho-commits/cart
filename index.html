@@ -1435,14 +1435,14 @@ function renderDailyDeal(d) {
   var verdict = (d.verdict || '').toLowerCase();
   var reason = d.reason || '';
   var query = (d.image_query || ((brand + ' ' + name).trim()) || name || 'shopping deal');
-  var imgUrl = d.image_url || ('https://source.unsplash.com/800x800/?' + encodeURIComponent(query));
+  var imgUrl = 'https://tse1.mm.bing.net/th?q=' + encodeURIComponent(query + ' product official') + '&w=600&h=600&c=7&rs=1&pid=1.7';
   var savingsPct = (orig && price && orig > price) ? Math.round(((orig - price) / orig) * 100) : null;
   var verdictClass = verdict === 'buy' ? 'buy' : verdict === 'wait' ? 'wait' : verdict === 'avoid' ? 'avoid' : '';
   var safeName = (name + ' ' + brand).replace(/'/g, '').replace(/"/g, '').trim();
   content.innerHTML = `
     <div class="deal-day-card ${verdictClass}">
       <div class="deal-day-img-wrap">
-        <img class="deal-day-img" src="${imgUrl}" alt="${name || 'Deal of the Day'}">
+        <img class="deal-day-img" src="${imgUrl}" alt="${name || 'Deal of the Day'}" onerror="this.src='https://source.unsplash.com/800x800/?'+encodeURIComponent(query)">
       </div>
       <div class="deal-day-main">
         <div class="deal-day-brand">${brand || ''}</div>
