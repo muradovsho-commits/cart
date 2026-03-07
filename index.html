@@ -43,7 +43,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 nav{position:sticky;top:0;z-index:60;height:var(--nav);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad-x);padding-left:max(var(--pad-x),env(safe-area-inset-left));padding-right:max(var(--pad-x),env(safe-area-inset-right));}
 .logo{display:flex;align-items:center;gap:8px;}
 .logo-icon{width:30px;height:30px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.logo-icon svg{width:15px;height:15px;}
+    <img src="/logo.png" alt="Kart AI" style="height:34px;width:auto;display:block;">
 .logo-name{font-size:16px;font-weight:800;letter-spacing:-.03em;font-style:italic;text-transform:none;}
 .logo-beta{font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--text3);border:1px solid var(--border);border-radius:5px;padding:2px 6px;text-transform:uppercase;}
 .nav-r{display:flex;gap:8px;}
@@ -486,8 +486,7 @@ nav{position:sticky;top:0;z-index:60;height:var(--nav);background:rgba(255,255,2
 
 <nav>
   <div class="logo">
-    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
-    <span class="logo-name">Kart AI</span><span class="logo-beta">Beta</span>
+    <img src="/logo.png" alt="Kart AI" style="height:34px;width:auto;display:block;">
   </div>
   <div class="nav-r">
     <button class="nbtn" onclick="openHistory()">History <span class="nbadge" id="histBadge"></span></button>
