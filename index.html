@@ -434,9 +434,8 @@ nav{position:sticky;top:0;z-index:60;height:var(--nav);background:rgba(255,255,2
   border-radius:14px;padding:14px;margin:0 16px 10px;}
 .wl-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .wl-top > div:first-of-type{min-width:0;}
-.wl-thumb{width:40px;height:40px;border-radius:8px;background:#e8e8ed;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.wl-thumb::before{content:'';width:18px;height:18px;border:1.5px solid #c7c7cc;border-radius:4px;}
+.wl-thumb{width:48px;height:48px;border-radius:10px;background:#e8e8ed;overflow:hidden;flex-shrink:0;}
+
 .wl-name{font-size:14px;font-weight:700;}
 .wl-date{font-size:11px;color:var(--text3);margin-top:1px;}
 .wl-rm{margin-left:auto;min-width:var(--touch);min-height:var(--touch);background:var(--bg);
@@ -1518,7 +1517,7 @@ function renderWL() {
     el.innerHTML = '<div class="wl-empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div><h3>Nothing tracked yet</h3><p>Search a product and tap<br>"+ Add to Watchlist".</p></div>';
     return;
   }
-  el.innerHTML = watchlist.map(function(w) { var wid = JSON.stringify(w.id); return '<div class="wl-card"><div class="wl-top"><div class="wl-thumb"></div><div><div class="wl-name">'+w.name+'</div><div class="wl-date">Added '+w.date+'</div></div><div class="wl-rm" onclick="removeWL('+wid+')">✕</div></div><div class="wl-prices"><div class="wlp"><div class="wlp-val cur">'+(w.cur?'$'+w.cur:'—')+'</div><div class="wlp-lbl">Current</div></div><div class="wlp"><div class="wlp-val lo">'+(w.low?'$'+w.low:'—')+'</div><div class="wlp-lbl">All-time low</div></div></div><div class="wl-verd '+(w.verdict||'')+'">'+(w.verdict||'—')+'</div></div>'; }).join('');
+  el.innerHTML = watchlist.map(function(w) { var wid = JSON.stringify(w.id); var wimg='https://tse1.mm.bing.net/th?q='+encodeURIComponent((w.name||'')+' product')+'&w=80&h=80&c=7&rs=1&pid=1.7'; return '<div class="wl-card"><div class="wl-top"><div class="wl-thumb"><img src="'+wimg+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div><div><div class="wl-name">'+w.name+'</div><div class="wl-date">Added '+w.date+'</div></div><div class="wl-rm" onclick="removeWL('+wid+')">✕</div></div><div class="wl-prices"><div class="wlp"><div class="wlp-val cur">'+(w.cur?'$'+w.cur:'—')+'</div><div class="wlp-lbl">Current</div></div><div class="wlp"><div class="wlp-val lo">'+(w.low?'$'+w.low:'—')+'</div><div class="wlp-lbl">All-time low</div></div></div><div class="wl-verd '+(w.verdict||'')+'">'+(w.verdict||'—')+'</div></div>'; }).join('');
 }
 
 // ── HISTORY PAGE ─────────────────────────────────────────────
