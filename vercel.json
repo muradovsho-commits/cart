@@ -4,6 +4,7 @@
   },
   "routes": [
     { "src": "/api/chat", "dest": "/api/chat.js" },
+    { "src": "/logo.png", "dest": "/logo.png" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
