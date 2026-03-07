@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Cart AI"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>Cart AI — Shop Smarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f5f5f7;--white:#fff;--card:#1c1c1e;--card2:#2c2c2e;
+  --border:#e5e5ea;--border-d:rgba(255,255,255,.09);
+  --text:#1c1c1e;--text2:#6e6e73;--text3:#aeaeb2;
+  --tw:#fff;--tw2:rgba(255,255,255,.7);--tw3:rgba(255,255,255,.35);
+  --accent:#2563eb;--accent-l:#eff6ff;--accent-b:#bfdbfe;
+  --buy:#16a34a;--wait:#d97706;--avoid:#dc2626;
+  --online:#7c3aed;--store:#0891b2;
+  --nav:56px;--r:16px;--cw:316px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:60;height:var(--nav);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.logo{display:flex;align-items:center;gap:8px;}
+.logo-icon{width:30px;height:30px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:15px;height:15px;}
+.logo-name{font-size:16px;font-weight:800;letter-spacing:-.03em;}
+.logo-beta{font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--text3);border:1px solid var(--border);border-radius:5px;padding:2px 6px;text-transform:uppercase;}
+.nav-r{display:flex;gap:6px;}
+.nbtn{display:flex;align-items:center;gap:5px;font-family:inherit;font-size:12px;font-weight:600;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;}
+.nbtn svg{width:12px;height:12px;}
+.nbadge{background:var(--card);color:#fff;font-size:9px;font-weight:700;border-radius:99px;padding:1px 5px;display:none;}
+
+/* LIMIT BANNER */
+
+
+/* MODE TABS */
+.mode-bar{display:flex;gap:6px;padding:14px 20px 0;max-width:560px;margin:0 auto;width:100%;}
+.tab{flex:1;padding:9px 0;text-align:center;font-size:12px;font-weight:700;border-radius:10px;cursor:pointer;border:1.5px solid var(--border);color:var(--text2);background:var(--white);}
+.tab.active{background:var(--card);color:#fff;border-color:var(--card);}
+
+/* SHELL */
+.shell{display:flex;min-height:calc(100vh - var(--nav));}
+.main{flex:1;min-width:0;}
+
+/* SEARCH SCREEN */
+.search-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - var(--nav) - 80px);padding:28px 20px 80px;}
+.hero{text-align:center;margin-bottom:20px;opacity:0;animation:rise .5s ease forwards .1s;}
+.hero h1{font-size:clamp(26px,4.5vw,46px);font-weight:800;letter-spacing:-.045em;line-height:1.06;margin-bottom:8px;}
+.hero h1 span{color:var(--accent);}
+.hero p{font-size:14px;color:var(--text2);line-height:1.6;max-width:360px;margin:0 auto;}
+.hero-r h1 span{color:var(--avoid);}
+.loc-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:99px;padding:5px 13px;margin-bottom:14px;cursor:pointer;opacity:0;animation:rise .5s ease forwards .15s;}
+.loc-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite;}
+.sbox{width:100%;max-width:560px;opacity:0;animation:rise .5s ease forwards .2s;}
+.scard{background:var(--card);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.18);overflow:hidden;}
+.srow{display:flex;align-items:center;padding:7px 7px 7px 16px;gap:4px;}
+.srow svg{color:var(--tw3);flex-shrink:0;width:16px;height:16px;}
+.sinput{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:15px;font-weight:500;color:#fff;padding:9px 8px;}
+.sinput::placeholder{color:var(--tw3);font-weight:400;}
+.sbtn{flex-shrink:0;background:#fff;color:var(--text);border:none;border-radius:14px;padding:11px 18px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.sbtn.danger{background:#dc2626;color:#fff;}
+.sfoot{border-top:1px solid var(--border-d);padding:10px 16px;display:flex;align-items:center;gap:10px;}
+.snap-btn{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#fff;background:none;border:none;cursor:pointer;font-family:inherit;}
+.snap-btn svg{width:12px;height:12px;}
+.shint{font-size:12px;color:var(--tw3);margin-left:auto;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:560px;margin-top:12px;opacity:0;animation:rise .5s ease forwards .3s;}
+.chip{font-size:12px;font-weight:600;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:99px;padding:6px 14px;cursor:pointer;}
+.oe-list{display:flex;flex-direction:column;gap:8px;max-width:560px;margin-top:12px;width:100%;opacity:0;animation:rise .5s ease forwards .3s;}
+.oe-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.oe-name{font-size:13px;font-weight:700;}
+.oe-detail{font-size:11px;color:var(--text2);margin-top:2px;}
+.oe-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;}
+.oe-tag.bad{background:#fee2e2;color:var(--avoid);}
+.oe-tag.good{background:#dcfce7;color:var(--buy);}
+
+/* LOAD */
+.load-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:60px 20px;min-height:calc(100vh - var(--nav));}
+.spinner{width:34px;height:34px;border:2.5px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite;}
+.load-title{font-size:15px;font-weight:700;}
+.load-sub{font-size:13px;color:var(--text2);}
+
+/* RESULT */
+.result-screen{display:none;}
+.rinner{max-width:560px;margin:0 auto;padding:24px 20px 100px;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;padding:0;margin-bottom:18px;}
+.qpill{display:inline-block;font-size:12px;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:8px;padding:5px 12px;margin-bottom:12px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sec{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px 2px;}
+.dcard{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:8px;}
+
+/* VERDICT */
+.vcard{background:var(--card);border-radius:var(--r);padding:20px;margin-bottom:8px;}
+.vprod{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tw3);margin-bottom:10px;}
+.vtop{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.vword{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1;}
+.vcard.buy .vword{color:#4ade80;}.vcard.wait .vword{color:#fbbf24;}.vcard.avoid .vword{color:#f87171;}
+.vbadge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:8px;padding:5px 11px;margin-bottom:4px;}
+.vcard.buy .vbadge{background:rgba(22,163,74,.15);color:#4ade80;}
+.vcard.wait .vbadge{background:rgba(217,119,6,.15);color:#fbbf24;}
+.vcard.avoid .vbadge{background:rgba(220,38,38,.15);color:#f87171;}
+.vreason{font-size:13px;line-height:1.6;color:var(--tw2);margin-bottom:12px;}
+.vconf-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.vconf-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--tw3);}
+.vconf-pct{font-size:20px;font-weight:800;}
+.vcard.buy .vconf-pct{color:#4ade80;}.vcard.wait .vconf-pct{color:#fbbf24;}.vcard.avoid .vconf-pct{color:#f87171;}
+.vtrack{height:4px;background:rgba(255,255,255,.08);border-radius:99px;}
+.vfill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.34,1.56,.64,1);width:0%;}
+.vcard.buy .vfill{background:#4ade80;}.vcard.wait .vfill{background:#fbbf24;}.vcard.avoid .vfill{background:#f87171;}
+
+/* OVERPAY VERDICT */
+.ocard{border-radius:var(--r);padding:20px;margin-bottom:8px;}
+.ocard.overpaid{background:linear-gradient(135deg,#1c0808,#2d1010);}
+.ocard.good-deal{background:linear-gradient(135deg,#081c08,#102d10);}
+.ocard.fair{background:var(--card);}
+.oprod{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tw3);margin-bottom:8px;}
+.opaid{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;}
+.opaid-lbl{font-size:12px;font-weight:600;color:var(--tw2);}
+.opaid-amt{font-size:34px;font-weight:800;letter-spacing:-.04em;color:#fff;}
+.oavg{font-size:13px;color:var(--tw2);margin-bottom:12px;}
+.oavg b{color:#fff;}
+.odiff{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:9px 14px;margin-bottom:12px;}
+.odiff.bad{background:rgba(220,38,38,.2);}.odiff.good{background:rgba(22,163,74,.2);}
+.odiff-txt{font-size:14px;font-weight:700;}
+.odiff.bad .odiff-txt{color:#f87171;}.odiff.good .odiff-txt{color:#4ade80;}
+.odiff-pct{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:4px;}
+.odiff.bad .odiff-pct{background:rgba(248,113,113,.2);color:#f87171;}
+.odiff.good .odiff-pct{background:rgba(74,222,128,.2);color:#4ade80;}
+
+/* PRICE STATS */
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px;}
+.pstat{background:var(--bg);border-radius:9px;padding:11px;text-align:center;}
+.pstat-val{font-size:18px;font-weight:800;letter-spacing:-.03em;color:var(--text);}
+.pstat-val.accent{color:var(--accent);}.pstat-val.good{color:var(--buy);}.pstat-val.bad{color:var(--avoid);}
+.pstat-lbl{font-size:10px;color:var(--text3);margin-top:2px;font-weight:600;}
+.save-note{background:#dcfce7;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;color:var(--buy);margin-bottom:10px;}
+.ppos-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-bottom:5px;}
+.ppos-track{height:7px;background:linear-gradient(to right,#4ade80,#fbbf24,#f87171);border-radius:99px;position:relative;}
+.ppos-marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;background:#fff;border:2.5px solid var(--text);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:left 1s cubic-bezier(.34,1.56,.64,1);}
+.ppos-sub{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px;}
+
+/* CHART */
+.chart-hd{font-size:11px;font-weight:700;color:var(--text2);display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.chart-est{font-size:9px;font-weight:700;padding:2px 8px;border-radius:5px;background:var(--accent-l);color:var(--accent);}
+.sale-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.sale-chip{font-size:11px;font-weight:600;color:var(--wait);background:rgba(217,119,6,.12);border-radius:6px;padding:3px 9px;}
+
+/* WHERE TO BUY */
+.buy-tabs{display:flex;gap:6px;margin-bottom:8px;}
+.btab{flex:1;padding:8px 0;text-align:center;font-size:12px;font-weight:700;border-radius:10px;cursor:pointer;border:1.5px solid transparent;}
+.btab.on{background:rgba(124,58,237,.1);color:var(--online);border-color:rgba(124,58,237,.2);}
+.btab.st{background:rgba(8,145,178,.1);color:var(--store);border-color:rgba(8,145,178,.2);}
+.btab.on.active{background:var(--online);color:#fff;border-color:var(--online);}
+.btab.st.active{background:var(--store);color:#fff;border-color:var(--store);}
+.bpanel{display:none;flex-direction:column;gap:7px;}
+.bpanel.active{display:flex;}
+.rcard{background:var(--white);border:1px solid var(--border);border-radius:13px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;}
+.rcard:hover{border-color:#c7c7cc;transform:translateY(-1px);box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.rcard-name{font-size:14px;font-weight:700;margin-bottom:2px;}
+.rcard-detail{font-size:12px;color:var(--text2);}
+.rcard-price{font-size:17px;font-weight:800;letter-spacing:-.03em;}
+.rcard-price.best{color:var(--buy);}
+.rcard-save{font-size:10px;color:var(--buy);font-weight:700;}
+.rtag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;}
+.rtag.bp{background:#dcfce7;color:var(--buy);}
+.rtag.is{background:#dbeafe;color:#1d4ed8;}
+.rtag.ls{background:#fef9c3;color:var(--wait);}
+.rtag.oo{background:rgba(124,58,237,.1);color:var(--online);}
+.rtag.cs{background:rgba(8,145,178,.1);color:var(--store);}
+.loc-note{background:var(--accent-l);border:1px solid var(--accent-b);border-radius:9px;padding:9px 13px;display:flex;align-items:center;gap:7px;font-size:12px;color:#1e40af;margin-bottom:8px;}
+.loc-note svg{width:12px;height:12px;flex-shrink:0;}
+.tiprow{display:flex;gap:7px;margin-bottom:7px;}
+.tiprow:last-child{margin-bottom:0;}
+.tipdash{color:var(--text3);flex-shrink:0;}
+.tipcopy{font-size:13px;color:var(--text2);line-height:1.55;}
+.chat-cta{background:var(--card);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-top:4px;}
+.cta-t{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;}
+.cta-s{font-size:11px;color:var(--tw2);}
+
+/* CHAT */
+#chatRail{width:var(--cw);flex-shrink:0;position:sticky;top:var(--nav);height:calc(100vh - var(--nav));background:var(--white);border-left:1px solid var(--border);display:flex;flex-direction:column;}
+.crhead{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.crid{display:flex;align-items:center;gap:8px;}
+.crav{width:30px;height:30px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.crav svg{width:14px;height:14px;}
+.crname{font-size:14px;font-weight:700;}
+.crstatus{font-size:11px;color:var(--text3);}
+.cronline{width:7px;height:7px;background:#22c55e;border-radius:50%;}
+.crmsgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;}
+.crmsgs::-webkit-scrollbar{width:0;}
+.cmsg.user{display:flex;flex-direction:row-reverse;}
+.csdr{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.cmsg.user .csdr{text-align:right;}
+.cbub{max-width:84%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.55;display:inline-block;}
+.cmsg.ai .cbub{background:var(--bg);color:var(--text);border-radius:4px 12px 12px 12px;}
+.cmsg.user .cbub{background:var(--card);color:#fff;border-radius:12px 4px 12px 12px;}
+.tdots{display:flex;align-items:center;gap:4px;padding:4px 0;}
+.td{width:5px;height:5px;background:var(--text3);border-radius:50%;animation:tdot 1.2s infinite;}
+.td:nth-child(2){animation-delay:.2s;}.td:nth-child(3){animation-delay:.4s;}
+.csugs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.csug{font-size:11px;font-weight:600;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:99px;padding:4px 9px;cursor:pointer;}
+.crinput{padding:10px;border-top:1px solid var(--border);flex-shrink:0;}
+.crinrow{display:flex;align-items:flex-end;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:7px 7px 7px 12px;}
+#ctxt{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text);resize:none;min-height:20px;max-height:80px;line-height:1.4;}
+#ctxt::placeholder{color:var(--text3);}
+.csend{width:28px;height:28px;background:var(--card);color:#fff;border:none;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.csend svg{width:12px;height:12px;}
+#mobchat{display:none;position:fixed;bottom:18px;right:18px;z-index:80;background:var(--card);color:#fff;border:none;border-radius:13px;padding:11px 16px;font-family:inherit;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;align-items:center;gap:6px;}
+.mcunread{width:7px;height:7px;background:#22c55e;border-radius:50%;display:none;}
+
+/* SCANNER MODAL */
+.ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;}
+.ov.open{display:flex;}
+.mbox{background:#fff;border-radius:18px;width:100%;max-width:380px;overflow:hidden;box-shadow:0 16px 60px rgba(0,0,0,.2);animation:pop .2s ease;}
+.mhd{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.mhdt{font-size:14px;font-weight:700;}
+.mclose{width:24px;height:24px;border-radius:6px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);}
+.mft{padding:12px 16px;display:flex;flex-direction:column;gap:7px;}
+.mft input{width:100%;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-family:inherit;font-size:13px;color:var(--text);outline:none;}
+.bfull{width:100%;padding:11px;border:none;border-radius:10px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;color:#fff;}
+
+/* GATE MODAL */
+.donate-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:400;background:var(--card);border-radius:16px;padding:16px 20px;max-width:320px;width:calc(100% - 40px);box-shadow:0 8px 40px rgba(0,0,0,.25);animation:rise .35s ease;display:none;}
+.donate-toast.show{display:block;}
+.donate-toast-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:5px;}
+.donate-toast-sub{font-size:12px;color:var(--tw2);line-height:1.55;margin-bottom:12px;}
+.donate-toast-btns{display:flex;gap:7px;}
+.donate-toast-btn{flex:1;padding:9px;border-radius:10px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;border:none;text-align:center;}
+.donate-toast-btn.pri{background:#fff;color:var(--card);}
+.donate-toast-btn.sec{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);}
+
+/* HISTORY DRAWER */
+.dbg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.3);display:none;}
+.dbg.open{display:block;}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(310px,90vw);background:#fff;border-left:1px solid var(--border);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.34,1.2,.64,1);}
+.drawer.open{transform:translateX(0);}
+.dhd{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.dhtitle{font-size:14px;font-weight:700;}
+.dbody{flex:1;overflow-y:auto;padding:10px;}
+.hempty{text-align:center;padding:40px 20px;font-size:13px;color:var(--text3);}
+.hitem{border:1px solid var(--border);border-radius:11px;padding:11px 13px;margin-bottom:7px;cursor:pointer;}
+.hitop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px;}
+.hiname{font-size:13px;font-weight:700;}
+.hiverd{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;}
+.hiverd.buy{background:#dcfce7;color:var(--buy);}
+.hiverd.wait{background:#fef9c3;color:var(--wait);}
+.hiverd.avoid,.hiverd.overpaid{background:#fee2e2;color:var(--avoid);}
+.hiverd.gooddeal{background:#dcfce7;color:var(--buy);}
+.hidate{font-size:11px;color:var(--text3);}
+.clrbtn{font-size:12px;font-weight:600;color:var(--text3);background:none;border:none;cursor:pointer;}
+
+/* ANIM */
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes tdot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.fade{opacity:0;animation:rise .35s ease forwards;}
+
+@media(max-width:860px){#chatRail{position:fixed;top:var(--nav);right:0;bottom:0;width:min(310px,92vw);transform:translateX(100%);transition:transform .3s ease;z-index:70;}#chatRail.open{transform:translateX(0);}#mobchat{display:flex;}}
+@media(max-width:480px){.pstats{grid-template-columns:1fr 1fr;}nav{padding:0 14px;}.rinner{padding:18px 14px 100px;}.mode-bar{padding:10px 14px 0;}.limit-bar{padding:0 14px;}}
+
+/* FULLSCREEN SCANNER */
+.scan-fs{position:fixed;inset:0;z-index:300;background:#000;display:none;flex-direction:column;}
+.scan-fs.open{display:flex;}
+.scan-video-wrap{position:relative;flex:1;overflow:hidden;}
+#camVid{width:100%;height:100%;object-fit:cover;display:block;}
+#camPrev{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;}
+#camCvs{display:none;}
+.scan-frame{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.scan-corners{position:relative;width:240px;height:240px;}
+.scan-corners::before,.scan-corners::after{content:'';position:absolute;width:36px;height:36px;border-color:#fff;border-style:solid;}
+.scan-corners::before{top:0;left:0;border-width:3px 0 0 3px;border-radius:4px 0 0 0;}
+.scan-corners::after{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0;}
+.scan-corners-b{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;justify-content:space-between;}
+.scan-corners-b::before,.scan-corners-b::after{content:'';width:36px;height:36px;border-color:#fff;border-style:solid;}
+.scan-corners-b::before{border-width:0 0 3px 3px;border-radius:0 0 0 4px;}
+.scan-corners-b::after{border-width:0 3px 3px 0;border-radius:0 0 4px 0;}
+.scan-inner-shadow{position:absolute;inset:0;box-shadow:inset 0 0 0 9999px rgba(0,0,0,.45);pointer-events:none;}
+.scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,rgba(255,255,255,.8),transparent);animation:scanline 2s ease-in-out infinite;}
+@keyframes scanline{0%{top:10%}100%{top:90%}}
+.scan-top-bar{position:absolute;top:0;left:0;right:0;padding:52px 20px 16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(0,0,0,.6),transparent);}
+.scan-title{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+.scan-x{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.scan-bottom{position:absolute;bottom:0;left:0;right:0;padding:20px 20px 44px;display:flex;flex-direction:column;align-items:center;gap:14px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);}
+.scan-detected{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:99px;padding:10px 20px;font-size:14px;font-weight:700;color:#1c1c1e;display:none;align-items:center;gap:8px;max-width:90%;text-align:center;}
+.scan-detected.show{display:flex;}
+.scan-detected-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;flex-shrink:0;}
+.scan-status{font-size:13px;font-weight:600;color:rgba(255,255,255,.8);text-align:center;}
+.scan-shutter{width:70px;height:70px;border-radius:50%;background:#fff;border:4px solid rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s;}
+.scan-shutter:active{transform:scale(.93);}
+.scan-shutter-inner{width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #e5e5ea;}
+.scan-actions{display:flex;gap:10px;width:100%;}
+.scan-action-btn{flex:1;padding:13px;border-radius:13px;border:none;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+.scan-action-btn.retake{background:rgba(255,255,255,.15);color:#fff;}
+.scan-action-btn.use{background:#fff;color:#1c1c1e;}
+.scan-manual{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 16px;font-family:inherit;font-size:14px;color:#fff;outline:none;text-align:center;}
+.scan-manual::placeholder{color:rgba(255,255,255,.45);}
+.scan-manual-btn{width:100%;padding:13px;border-radius:13px;border:none;font-family:inherit;font-size:14px;font-weight:700;background:rgba(255,255,255,.9);color:#1c1c1e;cursor:pointer;}
+
+/* ── BOTTOM TAB BAR ── */
+.btabbar{position:fixed;bottom:0;left:0;right:0;z-index:90;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;align-items:center;
+  padding:8px 0 calc(8px + env(safe-area-inset-bottom));
+  height:calc(56px + env(safe-area-inset-bottom));}
+.bti{display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:4px 20px;border-radius:10px;}
+.bti svg{width:22px;height:22px;color:var(--text3);}
+.bti.active svg{color:var(--text);}
+.bti-lbl{font-size:10px;font-weight:600;color:var(--text3);}
+.bti.active .bti-lbl{color:var(--text);}
+
+/* ── EXTRA PAGES ── */
+.xpg{display:none;position:fixed;top:var(--nav);left:0;right:0;
+  bottom:calc(56px + env(safe-area-inset-bottom));
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:var(--bg);z-index:81;}
+.xpg.open{display:block;}
+
+/* ── CHAT BACKDROP ── */
+#chatBackdrop{display:none;position:fixed;inset:0;z-index:89;background:rgba(0,0,0,.25);}
+
+/* ── CHAT RAIL MOBILE ── */
+@media(max-width:860px){
+  #chatRail{position:fixed;top:var(--nav);right:0;height:52vh;
+    width:92vw;max-width:340px;transform:translateX(110%);
+    transition:transform .28s ease;z-index:92;
+    display:flex;flex-direction:column;overflow:hidden;
+    border-radius:0 0 0 14px;box-shadow:-4px 4px 24px rgba(0,0,0,.13);}
+  #chatRail.open{transform:translateX(0);}
+  .crmsgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;}
+  .crinput{flex-shrink:0;}
+  #mobchat{display:flex !important;bottom:calc(68px + env(safe-area-inset-bottom)) !important;z-index:92;}
+}
+
+/* ── BODY PADDING ── */
+body{padding-bottom:calc(56px + env(safe-area-inset-bottom));}
+.search-screen{min-height:calc(100vh - var(--nav) - 56px - env(safe-area-inset-bottom)) !important;padding:20px 20px 30px !important;}
+
+/* ── COMING SOON ── */
+.coming-wrap{display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:60vh;text-align:center;padding:40px 24px;}
+.coming-wrap .ci{font-size:50px;margin-bottom:16px;}
+.coming-wrap h2{font-size:21px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px;}
+.coming-wrap p{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:22px;}
+.coming-badge{background:var(--card);color:#fff;border-radius:10px;
+  padding:9px 20px;font-size:13px;font-weight:700;opacity:.45;}
+
+/* ── WATCHLIST ── */
+.wl-hero{padding:20px 20px 10px;}
+.wl-hero h2{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:3px;}
+.wl-hero p{font-size:13px;color:var(--text2);}
+.wl-empty{text-align:center;padding:50px 24px;}
+.wl-empty .ei{font-size:44px;margin-bottom:12px;}
+.wl-empty h3{font-size:17px;font-weight:800;margin-bottom:7px;}
+.wl-empty p{font-size:13px;color:var(--text2);line-height:1.6;}
+.wl-card{background:var(--white);border:1px solid var(--border);
+  border-radius:14px;padding:14px;margin:0 16px 10px;}
+.wl-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.wl-emoji{width:40px;height:40px;background:#ebebeb;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.wl-name{font-size:14px;font-weight:700;}
+.wl-date{font-size:11px;color:var(--text3);margin-top:1px;}
+.wl-rm{margin-left:auto;width:26px;height:26px;background:var(--bg);
+  border-radius:6px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:11px;color:var(--text3);flex-shrink:0;}
+.wl-prices{display:flex;gap:8px;margin-bottom:10px;}
+.wlp{flex:1;background:var(--bg);border-radius:9px;padding:10px;text-align:center;}
+.wlp-val{font-size:16px;font-weight:800;}
+.wlp-val.cur{color:var(--accent);}
+.wlp-val.lo{color:var(--buy);}
+.wlp-lbl{font-size:10px;color:var(--text3);font-weight:600;margin-top:2px;}
+.wl-verd{font-size:12px;font-weight:700;padding:7px;border-radius:8px;text-align:center;}
+.wl-verd.Buy{background:#dcfce7;color:var(--buy);}
+.wl-verd.Wait{background:#fef9c3;color:var(--wait);}
+.wl-verd.Avoid{background:#fee2e2;color:var(--avoid);}
+
+/* ── HISTORY PAGE ── */
+.hi-hero{padding:20px 20px 10px;display:flex;align-items:center;justify-content:space-between;}
+.hi-hero h2{font-size:20px;font-weight:800;letter-spacing:-.03em;}
+.hi-clear{font-size:12px;font-weight:600;color:var(--text3);background:none;border:none;cursor:pointer;font-family:inherit;}
+.hi-empty{text-align:center;padding:50px 24px;}
+.hi-empty .ei{font-size:44px;margin-bottom:12px;}
+.hi-empty h3{font-size:17px;font-weight:800;margin-bottom:7px;}
+.hi-empty p{font-size:13px;color:var(--text2);line-height:1.6;}
+.hi-item{background:var(--white);border:1px solid var(--border);
+  border-radius:12px;padding:13px 14px;margin:0 16px 8px;
+  display:flex;align-items:center;gap:12px;cursor:pointer;}
+.hi-item:active{opacity:.75;}
+.hi-icon{width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.hi-icon.buy,.hi-icon.gooddeal{background:#dcfce7;}
+.hi-icon.wait,.hi-icon.fair{background:#fef9c3;}
+.hi-icon.avoid,.hi-icon.overpaid{background:#fee2e2;}
+.hi-name{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hi-meta{font-size:11px;color:var(--text3);margin-top:1px;}
+.hi-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;margin-left:auto;flex-shrink:0;}
+.hi-tag.buy,.hi-tag.gooddeal{background:#dcfce7;color:var(--buy);}
+.hi-tag.wait,.hi-tag.fair{background:#fef9c3;color:var(--wait);}
+.hi-tag.avoid,.hi-tag.overpaid{background:#fee2e2;color:var(--avoid);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+    <span class="logo-name">Cart AI</span><span class="logo-beta">Beta</span>
+  </div>
+  <div class="nav-r">
+    <button class="nbtn" onclick="openScanner()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg>Scan</button>
+    <button class="nbtn" onclick="openHistory()">History <span class="nbadge" id="histBadge"></span></button>
+  </div>
+</nav>
+
+
+
+<!-- MODE TABS -->
+<div class="mode-bar">
+  <div class="tab active" id="tab-shop" onclick="switchMode('shop')">Should I Buy This?</div>
+  <div class="tab" id="tab-op" onclick="switchMode('overpay')">Did I Overpay?</div>
+</div>
+
+<div class="shell">
+<div class="main">
+
+<!-- ═══ SHOP MODE ═══ -->
+<div id="shopMode">
+  <div class="search-screen" id="shopSearch">
+    <div class="hero"><h1>Find the best place<br>to buy <span>anything.</span></h1><p>Type a product and Cart AI finds the best price online and near you.</p></div>
+    <div class="loc-pill" onclick="refreshLoc()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="loc-dot"></div><span id="locLabel">Detecting location...</span></div>
+    <div class="sbox">
+      <div class="scard">
+        <div class="srow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="sinput" id="mainInput" placeholder="e.g. Sony WH-1000XM5 headphones $280" autocomplete="off"/><button class="sbtn" onclick="doAnalyze()">Find Best Price</button></div>
+        <div class="sfoot"><button class="snap-btn" onclick="openScanner()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg>Snap a photo</button><span class="shint">Press Enter</span></div>
+      </div>
+      <div class="chips">
+        <div class="chip" onclick="useChip(this)">AirPods Pro 2</div>
+        <div class="chip" onclick="useChip(this)">MacBook Air M3</div>
+        <div class="chip" onclick="useChip(this)">Dyson V15</div>
+        <div class="chip" onclick="useChip(this)">Nike Air Max 270</div>
+        <div class="chip" onclick="useChip(this)">Samsung 65" 4K TV</div>
+      </div>
+    </div>
+  </div>
+  <div class="load-screen" id="shopLoad"><div class="spinner"></div><div class="load-title" id="ltitle">Finding best prices</div><div class="load-sub" id="lsub">Checking retailers near you</div></div>
+  <div class="result-screen" id="shopResult"><div class="rinner"><button class="back-btn" onclick="goBack('shop')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>New search</button><div id="shopContent"></div></div></div>
+</div>
+
+<!-- ═══ OVERPAY MODE ═══ -->
+<div id="opMode" style="display:none">
+  <div class="search-screen" id="opSearch">
+    <div class="hero hero-r"><h1>Did you <span>overpay?</span></h1><p>Tell us what you bought and what you paid. We will tell you the truth.</p></div>
+    <div class="sbox" style="opacity:1;animation:none">
+      <div class="scard">
+        <div class="srow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><input class="sinput" id="opInput" placeholder='e.g. "Nike Air Max $140" or "Sony TV I paid $899"' autocomplete="off"/><button class="sbtn danger" onclick="doOverpay()">Check It</button></div>
+        <div class="sfoot"><button class="snap-btn" onclick="openScanner()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg>Snap receipt</button></div>
+      </div>
+    </div>
+    <div class="oe-list">
+      <div class="oe-item" onclick="useOE('AirPods Pro 2 I paid $189')"><div><div class="oe-name">AirPods Pro 2</div><div class="oe-detail">Paid $189 at Target</div></div><div class="oe-tag good">Good deal</div></div>
+      <div class="oe-item" onclick="useOE('Samsung 65 inch TV I paid $1200')"><div><div class="oe-name">Samsung 65" 4K TV</div><div class="oe-detail">Paid $1,200 at Best Buy</div></div><div class="oe-tag bad">Overpaid</div></div>
+      <div class="oe-item" onclick="useOE('Nike Air Force 1 I paid $120')"><div><div class="oe-name">Nike Air Force 1</div><div class="oe-detail">Paid $120 at Foot Locker</div></div><div class="oe-tag good">Fair price</div></div>
+    </div>
+  </div>
+  <div class="load-screen" id="opLoad"><div class="spinner"></div><div class="load-title">Checking your price</div><div class="load-sub">Comparing against market data...</div></div>
+  <div class="result-screen" id="opResult"><div class="rinner"><button class="back-btn" onclick="goBack('op')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Check another</button><div id="opContent"></div></div></div>
+</div>
+
+</div><!-- /main -->
+
+<!-- CHAT RAIL -->
+</div><!-- /shell -->
+
+<button id="mobchat" onclick="toggleChat()"><div class="mcunread" id="mcunread"></div>Ask Cart AI<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+
+<!-- SCANNER -->
+<div class="scan-fs" id="scanOv">
+  <div class="scan-video-wrap">
+    <video id="camVid" autoplay playsinline muted></video>
+    <img id="camPrev"/>
+    <canvas id="camCvs"></canvas>
+    <!-- dim overlay + corners -->
+    <div class="scan-inner-shadow"></div>
+    <div class="scan-frame" id="camOv">
+      <div class="scan-corners">
+        <div class="scan-corners-b"></div>
+        <div class="scan-line"></div>
+      </div>
+    </div>
+    <!-- top bar -->
+    <div class="scan-top-bar">
+      <div class="scan-title">Identify Product</div>
+      <button class="scan-x" onclick="closeScanner()">&#x2715;</button>
+    </div>
+    <!-- bottom controls -->
+    <div class="scan-bottom">
+      <div class="scan-detected" id="scanDetected"><div class="scan-detected-dot"></div><span id="scanDetectedTxt"></span></div>
+      <div class="scan-status" id="scanTxt">Point camera at the product</div>
+      <!-- shutter (live view) -->
+      <div id="shutterWrap">
+        <button class="scan-shutter" onclick="capturePhoto()"><div class="scan-shutter-inner"></div></button>
+      </div>
+      <!-- after capture -->
+      <div class="scan-actions" id="scanActions" style="display:none">
+        <button class="scan-action-btn retake" onclick="retakePhoto()">Retake</button>
+        <button class="scan-action-btn use" id="identBtn" onclick="handleIdentBtn()">Identify Product</button>
+      </div>
+      <!-- manual fallback -->
+      <input class="scan-manual" type="text" id="manualIn" placeholder="Or type product name manually"/>
+      <button class="scan-manual-btn" onclick="useManual()">Use this name</button>
+    </div>
+  </div>
+</div>
+
+<!-- DONATE TOAST -->
+<div class="donate-toast" id="donateToast">
+  <div class="donate-toast-title">Enjoying Cart AI? ☕</div>
+  <div class="donate-toast-sub">Cart AI is free to use. If it helped you save money, we would really appreciate a small donation to keep it running!</div>
+  <div class="donate-toast-btns">
+    <button class="donate-toast-btn pri" onclick="window.open('https://ko-fi.com/cartai','_blank');closeDonateToast()">Buy us a coffee</button>
+    <button class="donate-toast-btn sec" onclick="closeDonateToast()">Maybe later</button>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div class="dbg" id="dbg" onclick="closeHistory()"></div>
+<div class="drawer" id="histDrawer">
+  <div class="dhd"><div class="dhtitle">History</div><div style="display:flex;gap:8px;align-items:center"><button class="clrbtn" onclick="clearHistory()">Clear</button><div class="mclose" onclick="closeHistory()">&#x2715;</div></div></div>
+  <div class="dbody" id="histBody"></div>
+</div>
+
+
+
+<div id="chatRail">
+  <div class="crhead"><div class="crid"><div class="crav"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="crname">Cart AI</div><div class="crstatus">Shopping advisor</div></div></div><div class="cronline"></div></div>
+  <div class="crmsgs" id="crmsgs"></div>
+  <div class="crinput"><div class="crinrow"><textarea id="ctxt" placeholder="Ask about prices, deals..." rows="1"></textarea><button class="csend" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div></div>
+</div>
+
+
+<!-- ═══ DEALS PAGE ═══ -->
+<div class="xpg" id="xpg-deals">
+  <div class="coming-wrap">
+    <div class="ci">🔥</div>
+    <h2>Deals &amp; Price Drops</h2>
+    <p>Real-time deals tailored to<br>your location — coming soon.</p>
+    <div class="coming-badge">Coming Soon</div>
+  </div>
+</div>
+
+<!-- ═══ WATCHLIST PAGE ═══ -->
+<div class="xpg" id="xpg-watch">
+  <div class="wl-hero"><h2>👁 Watchlist</h2><p>Products you are tracking</p></div>
+  <div id="wlContent"></div>
+</div>
+
+<!-- ═══ HISTORY PAGE ═══ -->
+<div class="xpg" id="xpg-history">
+  <div class="hi-hero"><h2>History</h2><button class="hi-clear" onclick="clearHist()">Clear all</button></div>
+  <div id="hiContent"></div>
+</div>
+
+<!-- CHAT BACKDROP -->
+<div id="chatBackdrop" onclick="closeChat()"></div>
+
+<!-- BOTTOM TAB BAR -->
+<div class="btabbar">
+  <div class="bti active" id="bti-home" onclick="showTab('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="bti-lbl">Home</span>
+  </div>
+  <div class="bti" id="bti-deals" onclick="showTab('deals')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    <span class="bti-lbl">Deals</span>
+  </div>
+  <div class="bti" id="bti-watch" onclick="showTab('watch')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <span class="bti-lbl">Watchlist</span>
+  </div>
+  <div class="bti" id="bti-history" onclick="showTab('history')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span class="bti-lbl">History</span>
+  </div>
+</div>
+
+<script>
+// ─── PROMPTS ────────────────────────────────────────────────────
+var SYS_SHOP = `You are Cart AI. Return ONLY valid JSON with no markdown fences:
+{"verdict":"Buy"|"Wait"|"Avoid","product_name":"string","reasoning":"2 sentences","price_assessment":"Great Deal"|"Fair"|"Overpriced"|"Unknown","confidence":1-100,"current_price":number|null,"avg_price":number|null,"low_price":number|null,"price_history":[{"month":"Jan","price":number},{"month":"Feb","price":number},{"month":"Mar","price":number},{"month":"Apr","price":number},{"month":"May","price":number},{"month":"Jun","price":number}],"typical_sale_periods":["string"],"online_retailers":[{"store":"string","price":number,"tag":"string","url_hint":"string","in_stock":boolean}],"nearby_stores":[{"store":"string","price":number|null,"distance_note":"string","tag":"string","note":"string"}],"tips":["string"]}
+Use realistic current prices. Include 3-5 online retailers and 3-5 physical stores for the user city. Output ONLY the JSON object.`;
+
+var SYS_OP = `You are Cart AI. Return ONLY valid JSON with no markdown fences:
+{"product_name":"string","paid_price":number,"avg_price":number,"low_price":number,"high_price":number,"verdict":"overpaid"|"good-deal"|"fair","diff_amount":number,"diff_percent":number,"reasoning":"2 sentences, be direct","price_history":[{"month":"Jan","price":number},{"month":"Feb","price":number},{"month":"Mar","price":number},{"month":"Apr","price":number},{"month":"May","price":number},{"month":"Jun","price":number}],"where_cheaper":[{"store":"string","price":number,"url_hint":"string"}],"tips":["string"]}
+diff_amount=abs(paid-avg). diff_percent=abs((paid-avg)/avg*100). verdict: overpaid if paid>avg*1.1, good-deal if paid<avg*0.9, fair otherwise. Output ONLY the JSON object.`;
+
+var SYS_CHAT = `You are Cart AI, a direct shopping advisor. Give concise, specific advice in 2-3 sentences. No filler words.`;
+
+// ─── STATE ──────────────────────────────────────────────────────
+var DONATE_AFTER = 3;
+let hist = [], chatCtx = [], curProd = null, loc = null, camStream = null, capImg = null, chatOpen = false, mode = 'shop';
+try { hist = JSON.parse(localStorage.getItem('cartai_v6') || '[]'); } catch(e) {}
+
+// ─── INIT ───────────────────────────────────────────────────────
+updateBadge();
+initChat();
+detectLoc();
+document.getElementById('mainInput').addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); doAnalyze(); }});
+document.getElementById('opInput').addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); doOverpay(); }});
+document.getElementById('ctxt').addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendChat(); }});
+document.getElementById('ctxt').addEventListener('input', function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,80)+'px'; });
+
+// ─── LIMIT ──────────────────────────────────────────────────────
+function getSearchCount() {
+  try { return parseInt(localStorage.getItem('cartai_searches') || '0'); } catch(e) { return 0; }
+}
+function incrementSearchCount() {
+  const count = getSearchCount() + 1;
+  try { localStorage.setItem('cartai_searches', count); } catch(e) {}
+  if(count === DONATE_AFTER) showDonateToast();
+}
+function canSearch() { return true; }
+function useSearch() { incrementSearchCount(); }
+function showDonateToast() {
+  const t = document.getElementById('donateToast');
+  if(t){ t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 12000); }
+}
+function closeDonateToast() {
+  document.getElementById('donateToast').classList.remove('show');
+}
+
+// ─── LOCATION ───────────────────────────────────────────────────
+function detectLoc() {
+  const lbl = document.getElementById('locLabel');
+  if(!navigator.geolocation){ loc={city:'your area',region:'',country:'US'}; lbl.textContent='Location unavailable'; return; }
+  navigator.geolocation.getCurrentPosition(async pos => {
+    try {
+      const {latitude:lat,longitude:lng} = pos.coords;
+      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+      const d = await r.json();
+      const city = d.address.city||d.address.town||d.address.village||'your area';
+      const state = d.address.state_code||d.address.state||'';
+      loc = {city, region:state, country:(d.address.country_code||'us').toUpperCase(), lat, lng};
+      lbl.textContent = city + (state?', '+state:'');
+    } catch(e) { loc={city:'your area',region:'',country:'US'}; lbl.textContent='Location detected'; }
+  }, () => { loc={city:'your area',region:'',country:'US'}; lbl.textContent='Tap to enable location'; }, {timeout:8000});
+}
+function refreshLoc() { document.getElementById('locLabel').textContent='Detecting...'; loc=null; detectLoc(); }
+function locStr() { if(!loc) return 'unknown location'; return `${loc.city}${loc.region?', '+loc.region:''} (${loc.country})`; }
+
+// ─── API ────────────────────────────────────────────────────────
+async function api(body) {
+  const res = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  const data = await res.json();
+  // Only throw if HTTP failed OR Anthropic returned an explicit error type
+  if(!res.ok || data.type === 'error') {
+    const msg = data.error?.message || data.error || 'API error';
+    throw new Error(msg);
+  }
+  if(Array.isArray(data.content)) data.content = data.content.filter(b => b.type==='text');
+  return data;
+}
+function getText(d) { return (d.content||[]).map(b=>b.text||'').join('').replace(/```json|```/g,'').trim(); }
+function parseJSON(raw) {
+  const m = raw.match(/\{[\s\S]*\}/);
+  if(!m) throw new Error('No JSON found in response');
+  return JSON.parse(m[0]);
+}
+
+// ─── ANALYZE ────────────────────────────────────────────────────
+async function doAnalyze() {
+  const q = document.getElementById('mainInput').value.trim();
+  if(!q) return;
+  if(!canSearch()) return;
+  const ls = locStr();
+  show('shopSearch','none'); show('shopResult','none'); show('shopLoad','flex');
+  const steps = [['Finding the product','Looking up current info...'],['Comparing prices','Checking Amazon, Best Buy, Walmart...'],['Nearby stores','Finding stores in '+((loc&&loc.city)||'your area')],['Price history','Analyzing 6-month trends'],['Almost done','Building your report']];
+  let si=0; const t=setInterval(()=>{ if(si<steps.length){document.getElementById('ltitle').textContent=steps[si][0];document.getElementById('lsub').textContent=steps[si][1];si++;} },700);
+  try {
+    const d = await api({model:'claude-sonnet-4-20250514',max_tokens:2000,system:SYS_SHOP,messages:[{role:'user',content:'Product: '+q+'\nLocation: '+ls}]});
+    const r = parseJSON(getText(d));
+    clearInterval(t);
+    useSearch();
+    curProd = {q,loc:ls,r,mode:'shop'};
+    saveHist(q,r,'shop');
+    renderShop(q,ls,r);
+    chatCtx = [{role:'user',content:'Product: '+q+', Location: '+ls+', Verdict: '+r.verdict},{role:'assistant',content:'Analyzed '+r.product_name+'. Verdict: '+r.verdict+'. Ask me anything.'}];
+    showUnread();
+  } catch(e) {
+    clearInterval(t);
+    show('shopLoad','none'); show('shopSearch','flex');
+    alert('Search failed: ' + (e.message||'Unknown error') + '. Please try again.');
+  }
+}
+
+// ─── OVERPAY ────────────────────────────────────────────────────
+async function doOverpay() {
+  const q = document.getElementById('opInput').value.trim();
+  if(!q) return;
+  if(!canSearch()) return;
+  show('opSearch','none'); show('opResult','none'); show('opLoad','flex');
+  try {
+    const d = await api({model:'claude-sonnet-4-20250514',max_tokens:1500,system:SYS_OP,messages:[{role:'user',content:q}]});
+    const r = parseJSON(getText(d));
+    show('opLoad','none');
+    useSearch();
+    curProd = {q,r,mode:'overpay'};
+    saveHist(q,r,'overpay');
+    renderOp(q,r);
+    chatCtx = [{role:'user',content:'Overpay check: '+q+'. Verdict: '+r.verdict},{role:'assistant',content:'Checked '+r.product_name+'. '+r.reasoning}];
+    showUnread();
+  } catch(e) {
+    show('opLoad','none'); show('opSearch','flex');
+    alert('Check failed: ' + (e.message||'Unknown error') + '. Please try again.');
+  }
+}
+
+function useChip(el) { document.getElementById('mainInput').value=el.textContent; doAnalyze(); }
+function useOE(txt) { document.getElementById('opInput').value=txt; doOverpay(); }
+
+// ─── HELPERS ────────────────────────────────────────────────────
+function fm(n){ return (n!=null&&n!=='') ? '$'+parseFloat(n).toFixed(0) : '—'; }
+function fd(n){ return (n!=null&&n!=='') ? '$'+parseFloat(n).toFixed(2) : '—'; }
+function show(id,v) { const el=document.getElementById(id); if(el) el.style.display=v; }
+function switchMode(m) {
+  mode=m;
+  document.getElementById('tab-shop').className='tab'+(m==='shop'?' active':'');
+  document.getElementById('tab-op').className='tab'+(m==='overpay'?' active':'');
+  document.getElementById('shopMode').style.display=m==='shop'?'block':'none';
+  document.getElementById('opMode').style.display=m==='overpay'?'block':'none';
+}
+function goBack(m) {
+  if(m==='shop'){ show('shopResult','none'); show('shopSearch','flex'); document.getElementById('mainInput').value=''; }
+  else { show('opResult','none'); show('opSearch','flex'); document.getElementById('opInput').value=''; }
+}
+function switchBuyTab(tab) {
+  document.getElementById('btab-on').className='btab on'+(tab==='on'?' active':'');
+  document.getElementById('btab-st').className='btab st'+(tab==='st'?' active':'');
+  document.getElementById('bpanel-on').className='bpanel'+(tab==='on'?' active':'');
+  document.getElementById('bpanel-st').className='bpanel'+(tab==='st'?' active':'');
+}
+function openRetailer(domain,name) {
+  const q=encodeURIComponent(name);
+  const urls={'amazon.com':'https://www.amazon.com/s?k='+q,'bestbuy.com':'https://www.bestbuy.com/site/searchpage.jsp?st='+q,'walmart.com':'https://www.walmart.com/search?q='+q,'target.com':'https://www.target.com/s?searchTerm='+q,'costco.com':'https://www.costco.com/s?keyword='+q,'newegg.com':'https://www.newegg.com/p/pl?d='+q,'bhphotovideo.com':'https://www.bhphotovideo.com/c/search?q='+q,'ebay.com':'https://www.ebay.com/sch/i.html?_nkw='+q};
+  window.open(urls[domain]||'https://www.google.com/search?q='+q+'+'+domain,'_blank','noopener');
+}
+function openMap(store,ls) { window.open('https://www.google.com/maps/search/'+encodeURIComponent(store+' near '+ls),'_blank','noopener'); }
+function focusChat() { if(window.innerWidth<=860){ chatOpen=true; document.getElementById('chatRail').classList.add('open'); } setTimeout(()=>document.getElementById('ctxt').focus(),100); }
+
+// ─── RENDER SHOP ────────────────────────────────────────────────
+function renderShop(q,ls,r) {
+  show('shopLoad','none');
+  const v=(r.verdict||'Wait').toLowerCase();
+  const conf=r.confidence||70;
+  const online=[...(r.online_retailers||[])].sort((a,b)=>(a.price||999)-(b.price||999));
+  const nearby=r.nearby_stores||[];
+  const h6=r.price_history||[];
+  const sale=r.typical_sale_periods||[];
+  const tips=r.tips||[];
+  const cur=r.current_price, avg=r.avg_price, low=r.low_price;
+  const best=online[0];
+  const sav=best&&cur&&(cur-best.price)>0 ? (cur-best.price).toFixed(2) : null;
+  let pos=50; if(cur&&avg&&low){ const mn=low*.88,mx=avg*1.3; pos=Math.min(92,Math.max(8,((cur-mn)/(mx-mn))*100)); }
+
+  document.getElementById('shopContent').innerHTML = `<div class="fade">
+<div class="qpill">${q}</div>
+<div class="vcard ${v}">
+  <div class="vprod">${r.product_name}</div>
+  <div class="vtop"><div class="vword">${r.verdict}</div><div class="vbadge">${r.price_assessment}</div></div>
+  <div class="vreason">${r.reasoning}</div>
+  <div class="vconf-row"><div class="vconf-lbl">Confidence</div><div class="vconf-pct" id="cPct">0%</div></div>
+  <div class="vtrack"><div class="vfill" id="cFill"></div></div>
+</div>
+${(cur||avg||low)?`
+<div class="sec">Price intelligence</div>
+<div class="dcard">
+  <div class="pstats">
+    <div class="pstat"><div class="pstat-val accent">${fm(cur)}</div><div class="pstat-lbl">Current price</div></div>
+    <div class="pstat"><div class="pstat-val">${fm(avg)}</div><div class="pstat-lbl">Market average</div></div>
+    <div class="pstat"><div class="pstat-val good">${fm(low)}</div><div class="pstat-lbl">All-time low</div></div>
+  </div>
+  ${sav?`<div class="save-note">Save $${sav} by buying at ${best.store} instead of full price</div>`:''}
+  <div class="ppos-lbl"><span>Low ${fm(low)}</span><span>Avg ${fm(avg)}</span></div>
+  <div class="ppos-track"><div class="ppos-marker" id="posMk" style="left:50%"></div></div>
+  <div class="ppos-sub"><span>Best deal</span><span>Overpriced</span></div>
+</div>`:''}
+${h6.length?`
+<div class="sec">Price history</div>
+<div class="dcard">
+  <div class="chart-hd">6-month trend<span class="chart-est">AI estimated</span></div>
+  <canvas id="priceChart" height="110" style="width:100%;display:block"></canvas>
+  ${sale.length?`<div style="margin-top:10px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">Typical sale periods</div><div class="sale-row">${sale.map(s=>`<div class="sale-chip">${s}</div>`).join('')}</div>`:''}
+</div>`:''}
+<div class="sec">Where to buy</div>
+<div class="loc-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Showing options for <strong>${ls}</strong></div>
+<div class="buy-tabs"><div class="btab on active" id="btab-on" onclick="switchBuyTab('on')">Online</div><div class="btab st" id="btab-st" onclick="switchBuyTab('st')">Near You</div></div>
+<div class="bpanel active" id="bpanel-on">
+${online.map((s,i)=>`<div class="rcard" onclick="openRetailer('${s.url_hint||''}','${r.product_name.replace(/'/g,'"')}')"><div><div class="rcard-name">${s.store}</div><div class="rcard-detail">${s.url_hint||''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="rcard-price${i===0?' best':''}">${fd(s.price)}</div>${i===0&&sav?`<div class="rcard-save">Save $${sav}</div>`:''}<div class="rtag ${i===0?'bp':'oo'}">${i===0?'Best Price':s.tag||'Online'}</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></div>`).join('') || '<div style="padding:16px;text-align:center;font-size:13px;color:var(--text3)">No online data</div>'}
+</div>
+<div class="bpanel" id="bpanel-st">
+${nearby.map(s=>`<div class="rcard" onclick="openMap('${s.store}','${ls}')"><div><div class="rcard-name">${s.store}</div><div class="rcard-detail">${s.distance_note||''}${s.note?' · '+s.note:''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">${s.price?`<div class="rcard-price">${fd(s.price)}</div>`:''}<div class="rtag ${s.tag==='In Stock'?'is':s.tag==='Limited Stock'?'ls':'cs'}">${s.tag||'Check Store'}</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></div>`).join('') || '<div style="padding:16px;text-align:center;font-size:13px;color:var(--text3)">Enable location for stores near you</div>'}
+</div>
+${tips.length?`<div class="sec">Tips</div><div class="dcard">${tips.map(t=>`<div class="tiprow"><div class="tipdash">—</div><div class="tipcopy">${t}</div></div>`).join('')}</div>`:''}
+<button onclick="addToWatchlist()" style="width:100%;margin:0 0 10px;background:none;border:1.5px solid var(--border);border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">+ Add to Watchlist</button>
+<div class="chat-cta" onclick="focusChat()"><div><div class="cta-t">Have a question?</div><div class="cta-s">Ask Cart AI for more advice</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+</div>`;
+
+  show('shopResult','block');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{
+    const f=document.getElementById('cFill'); if(f) f.style.width=conf+'%';
+    const p=document.getElementById('cPct'); if(p) p.textContent=conf+'%';
+    const m=document.getElementById('posMk'); if(m) m.style.left=pos+'%';
+    if(h6.length) drawChart('priceChart',h6,v);
+  },200);
+}
+
+// ─── RENDER OVERPAY ──────────────────────────────────────────────
+function renderOp(q,r) {
+  const v=r.verdict||'fair';
+  const over=v==='overpaid', good=v==='good-deal';
+  const h6=r.price_history||[];
+  const cheaper=r.where_cheaper||[];
+  const tips=r.tips||[];
+
+  document.getElementById('opContent').innerHTML = `<div class="fade">
+<div class="qpill">${q}</div>
+<div class="ocard ${v}">
+  <div class="oprod">${r.product_name}</div>
+  <div class="opaid"><div class="opaid-lbl">You paid</div><div class="opaid-amt">${fm(r.paid_price)}</div></div>
+  <div class="oavg">Market average: <b>${fm(r.avg_price)}</b> &nbsp;·&nbsp; Best price: <b>${fm(r.low_price)}</b></div>
+  <div class="odiff ${over?'bad':'good'}">
+    <span style="font-size:16px">${over?'↑':'↓'}</span>
+    <div class="odiff-txt">${over?`Overpaid by $${(r.diff_amount||0).toFixed(2)}`:good?`Saved $${(r.diff_amount||0).toFixed(2)}`:'Fair price'}<span class="odiff-pct">${(r.diff_percent||0).toFixed(0)}% ${over?'above':'below'} avg</span></div>
+  </div>
+  <div style="font-size:13px;line-height:1.6;color:var(--tw2)">${r.reasoning}</div>
+</div>
+<div class="sec">Price breakdown</div>
+<div class="dcard"><div class="pstats">
+  <div class="pstat"><div class="pstat-val ${over?'bad':'good'}">${fm(r.paid_price)}</div><div class="pstat-lbl">You paid</div></div>
+  <div class="pstat"><div class="pstat-val">${fm(r.avg_price)}</div><div class="pstat-lbl">Market avg</div></div>
+  <div class="pstat"><div class="pstat-val good">${fm(r.low_price)}</div><div class="pstat-lbl">Best price</div></div>
+</div></div>
+${h6.length?`<div class="sec">Price history</div><div class="dcard"><div class="chart-hd">6-month trend<span class="chart-est">AI estimated</span></div><canvas id="opChart" height="110" style="width:100%;display:block"></canvas>${r.paid_price?`<div style="margin-top:7px;font-size:11px;font-weight:600;color:var(--text3)">— Your price: ${fm(r.paid_price)}</div>`:''}</div>`:''}
+${cheaper.length?`<div class="sec">Where it is cheaper</div><div style="display:flex;flex-direction:column;gap:7px">${cheaper.map((s,i)=>`<div class="rcard" onclick="openRetailer('${s.url_hint||''}','${r.product_name.replace(/'/g,'"')}')"><div><div class="rcard-name">${s.store}</div><div class="rcard-detail">${s.url_hint||''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="rcard-price${i===0?' best':''}">${fd(s.price)}</div>${r.paid_price&&s.price<r.paid_price?`<div class="rcard-save">Save $${(r.paid_price-s.price).toFixed(2)}</div>`:''}<div class="rtag ${i===0?'bp':'oo'}">${i===0?'Best Price':'Online'}</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></div>`).join('')}</div>`:''}
+${tips.length?`<div class="sec">For next time</div><div class="dcard">${tips.map(t=>`<div class="tiprow"><div class="tipdash">—</div><div class="tipcopy">${t}</div></div>`).join('')}</div>`:''}
+<div class="chat-cta" onclick="focusChat()"><div><div class="cta-t">Want to talk about it?</div><div class="cta-s">Ask Cart AI what to do next</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+</div>`;
+
+  show('opResult','block');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(h6.length) setTimeout(()=>drawChart('opChart',h6,over?'avoid':'buy',r.paid_price),200);
+}
+
+// ─── CHART ──────────────────────────────────────────────────────
+function drawChart(id,data,verdict,paid=null) {
+  const cv=document.getElementById(id); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const W=cv.offsetWidth||320, H=110;
+  cv.width=W*2; cv.height=H*2; ctx.scale(2,2);
+  const prices=data.map(d=>d.price), labels=data.map(d=>d.month);
+  const mn=Math.min(...prices)*.94, mx=Math.max(...prices)*1.06;
+  const p={t:8,r:8,b:22,l:34};
+  const gw=W-p.l-p.r, gh=H-p.t-p.b;
+  const px=i=>p.l+(i/(data.length-1))*gw;
+  const py=v=>p.t+gh-(((v-mn)/(mx-mn))*gh);
+  ctx.strokeStyle='#f0f0f0'; ctx.lineWidth=1;
+  for(let i=0;i<=3;i++){ const y=p.t+(i/3)*gh; ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+gw,y);ctx.stroke(); ctx.fillStyle='#aeaeb2';ctx.font='500 8.5px Plus Jakarta Sans';ctx.textAlign='right';ctx.fillText('$'+Math.round(mx-(i/3)*(mx-mn)),p.l-3,y+3); }
+  const col=verdict==='buy'?'34,197,94':verdict==='avoid'?'239,68,68':'245,158,11';
+  const gr=ctx.createLinearGradient(0,p.t,0,p.t+gh);
+  gr.addColorStop(0,`rgba(${col},.22)`); gr.addColorStop(1,`rgba(${col},0)`);
+  ctx.beginPath(); ctx.moveTo(px(0),py(prices[0])); data.forEach((_,i)=>{ if(i>0)ctx.lineTo(px(i),py(prices[i])); }); ctx.lineTo(px(data.length-1),p.t+gh); ctx.lineTo(px(0),p.t+gh); ctx.closePath(); ctx.fillStyle=gr; ctx.fill();
+  ctx.beginPath(); ctx.strokeStyle=`rgb(${col})`; ctx.lineWidth=2; ctx.lineJoin='round'; data.forEach((d,i)=>{ if(i===0)ctx.moveTo(px(i),py(d.price));else ctx.lineTo(px(i),py(d.price)); }); ctx.stroke();
+  if(paid!=null&&paid>=mn&&paid<=mx){ ctx.beginPath();ctx.setLineDash([4,3]);ctx.strokeStyle='rgba(220,38,38,.55)';ctx.lineWidth=1.5;ctx.moveTo(p.l,py(paid));ctx.lineTo(p.l+gw,py(paid));ctx.stroke();ctx.setLineDash([]); }
+  ctx.font='500 8.5px Plus Jakarta Sans'; ctx.textAlign='center';
+  data.forEach((d,i)=>{ ctx.beginPath();ctx.arc(px(i),py(d.price),2.5,0,Math.PI*2);ctx.fillStyle=`rgb(${col})`;ctx.fill(); ctx.fillStyle='#6e6e73';ctx.fillText(labels[i],px(i),H-7); });
+}
+
+// ─── CHAT ────────────────────────────────────────────────────────
+function initChat(){ addAI("Hi, I am Cart AI. Search a product to find the best price, or use the Did I Overpay? tab to check past purchases.",["Best time to buy electronics?","Which stores price match?","How to spot a real sale?"]); }
+function addAI(txt,sugs=[]){ const c=document.getElementById('crmsgs');const d=document.createElement('div');d.className='cmsg ai';d.innerHTML=`<div><div class="csdr">Cart AI</div><div class="cbub">${txt}</div>${sugs.length?`<div class="csugs">${sugs.map(s=>`<div class="csug" onclick="useSug(this)">${s}</div>`).join('')}</div>`:''}</div>`;c.appendChild(d);scrollChat(); }
+function addUser(txt){ const c=document.getElementById('crmsgs');const d=document.createElement('div');d.className='cmsg user';d.innerHTML=`<div><div class="csdr">You</div><div class="cbub">${txt}</div></div>`;c.appendChild(d);scrollChat(); }
+function addTyping(){ const c=document.getElementById('crmsgs');const d=document.createElement('div');d.className='cmsg ai';d.id='typing';d.innerHTML=`<div><div class="cbub"><div class="tdots"><div class="td"></div><div class="td"></div><div class="td"></div></div></div></div>`;c.appendChild(d);scrollChat(); }
+function scrollChat(){ const c=document.getElementById('crmsgs'); setTimeout(()=>c.scrollTop=c.scrollHeight,40); }
+function useSug(el){ document.getElementById('ctxt').value=el.textContent; sendChat(); }
+function showUnread(){ const u=document.getElementById('mcunread'); if(u&&window.innerWidth<=860) u.style.display='block'; }
+async function sendChat(){
+  const inp=document.getElementById('ctxt'); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=''; inp.style.height=''; addUser(txt); chatCtx.push({role:'user',content:txt}); addTyping();
+  try {
+    const d=await api({model:'claude-sonnet-4-20250514',max_tokens:350,system:SYS_CHAT+(curProd?'\n\nContext: '+JSON.stringify(curProd.r):''),messages:chatCtx.slice(-10)});
+    const reply=getText(d).trim(); document.getElementById('typing')?.remove(); chatCtx.push({role:'assistant',content:reply}); addAI(reply);
+  } catch(e) { document.getElementById('typing')?.remove(); addAI("Something went wrong, try again."); }
+}
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatRail').classList.toggle('open',chatOpen);
+  document.getElementById('chatBackdrop').style.display=chatOpen?'block':'none';
+  document.getElementById('mobchat').style.display=chatOpen?'none':'flex';
+  document.getElementById('mcunread').style.display='none';
+  if(chatOpen){
+    const msgs=document.getElementById('crmsgs');
+    if(msgs&&!msgs.children.length) initChat();
+    setTimeout(()=>document.getElementById('ctxt').focus(),300);
+  }
+}
+function closeChat(){
+  chatOpen=false;
+  document.getElementById('chatRail').classList.remove('open');
+  document.getElementById('chatBackdrop').style.display='none';
+  document.getElementById('mobchat').style.display='flex';
+}
+
+// ─── HISTORY ─────────────────────────────────────────────────────
+function saveHist(q,r,m){ hist.unshift({id:Date.now(),q,name:r.product_name||q,verdict:r.verdict||'—',date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}),r,m}); if(hist.length>50) hist=hist.slice(0,50); try{localStorage.setItem('cartai_v6',JSON.stringify(hist));}catch(e){} updateBadge(); }
+function updateBadge(){ const b=document.getElementById('histBadge'); if(!b)return; b.textContent=hist.length; b.style.display=hist.length?'inline-block':'none'; }
+function openHistory(){ renderHistBody(); document.getElementById('dbg').classList.add('open'); document.getElementById('histDrawer').classList.add('open'); }
+function closeHistory(){ document.getElementById('dbg').classList.remove('open'); document.getElementById('histDrawer').classList.remove('open'); }
+function renderHistBody(){ const b=document.getElementById('histBody'); if(!hist.length){b.innerHTML='<div class="hempty">No searches yet.</div>';return;} b.innerHTML=hist.map(h=>`<div class="hitem" onclick="loadHist(${h.id})"><div class="hitop"><div class="hiname">${h.name||h.q}</div><div class="hiverd ${(h.verdict||'').toLowerCase().replace('-','')}">${h.verdict||'—'}</div></div><div class="hidate">${h.m==='overpay'?'Overpay · ':''}${h.date}</div></div>`).join(''); }
+function loadHist(id){ const h=hist.find(x=>x.id===id); if(!h) return; closeHistory(); if(h.m==='overpay'){switchMode('overpay');curProd={q:h.q,r:h.r,mode:'overpay'};renderOp(h.q,h.r);}else{switchMode('shop');curProd={q:h.q,loc:locStr(),r:h.r,mode:'shop'};renderShop(h.q,locStr(),h.r);} }
+function clearHistory(){ if(!confirm('Clear all history?')) return; hist=[]; try{localStorage.removeItem('cartai_v6');}catch(e){} updateBadge(); renderHistBody(); }
+
+// ─── CAMERA ──────────────────────────────────────────────────────
+async function openScanner(){
+  document.getElementById('scanOv').classList.add('open');
+  capImg=null;
+  document.getElementById('camPrev').style.display='none';
+  document.getElementById('camPrev').style.position='absolute';
+  document.getElementById('camOv').style.display='flex';
+  document.getElementById('scanActions').style.display='none';
+  document.getElementById('shutterWrap').style.display='flex';
+  document.getElementById('identBtn').textContent='Identify Product';
+  identBtnMode='identify';
+  document.getElementById('scanDetected').classList.remove('show');
+  document.getElementById('scanTxt').textContent='Point camera at the product';
+  document.getElementById('manualIn').value='';
+  try {
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      throw new Error('Camera API not available');
+    }
+    camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const v=document.getElementById('camVid'); v.srcObject=camStream; v.play(); v.style.display='block';
+  } catch(e) {
+    var msg = 'Camera unavailable — type product name below';
+    if(e.name==='NotAllowedError') msg = 'Camera permission denied — allow in Settings then try again';
+    if(e.name==='NotFoundError') msg = 'No camera found — type product name below';
+    document.getElementById('scanTxt').textContent = msg;
+    document.getElementById('shutterWrap').style.display='none';
+  }
+}
+function capturePhoto(){
+  const v=document.getElementById('camVid'),c=document.getElementById('camCvs');
+  c.width=v.videoWidth||640; c.height=v.videoHeight||480; c.getContext('2d').drawImage(v,0,0);
+  capImg=c.toDataURL('image/jpeg',.85).split(',')[1];
+  const pr=document.getElementById('camPrev');
+  pr.src='data:image/jpeg;base64,'+capImg;
+  pr.style.cssText='display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+  v.style.display='none';
+  document.getElementById('camOv').style.display='none';
+  document.getElementById('shutterWrap').style.display='none';
+  document.getElementById('scanActions').style.display='flex';
+  document.getElementById('scanTxt').textContent='Tap Identify Product';
+  if(camStream) camStream.getTracks().forEach(t=>t.enabled=false);
+}
+function retakePhoto(){
+  capImg=null;
+  document.getElementById('camPrev').style.display='none';
+  document.getElementById('camVid').style.display='block';
+  document.getElementById('camOv').style.display='flex';
+  document.getElementById('shutterWrap').style.display='flex';
+  document.getElementById('scanActions').style.display='none';
+  document.getElementById('scanDetected').classList.remove('show');
+  document.getElementById('scanTxt').textContent='Point camera at the product';
+  if(camStream) camStream.getTracks().forEach(t=>t.enabled=true);
+}
+async function identifyProduct(){
+  if(!capImg) return;
+  document.getElementById('identBtn').disabled=true; document.getElementById('identBtn').textContent='Identifying...';
+  try {
+    const d=await api({model:'claude-sonnet-4-20250514',max_tokens:150,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:capImg}},{type:'text',text:'What product is this? Reply with ONLY the product name and model number. Nothing else.'}]}]});
+    const name=getText(d).trim();
+    if(name&&name.length>2){
+      document.getElementById('manualIn').value=name;
+      document.getElementById('scanDetectedTxt').textContent=name;
+      document.getElementById('scanDetected').classList.add('show');
+      document.getElementById('scanTxt').textContent='Tap Use This Product to search';
+      document.getElementById('identBtn').textContent='Use This Product';
+      identBtnMode='use';
+    } else {
+      document.getElementById('scanTxt').textContent='Could not identify — try a clearer photo';
+      document.getElementById('identBtn').textContent='Try Again';
+    }
+    document.getElementById('identBtn').disabled=false;
+  } catch(e) { document.getElementById('scanTxt').textContent='Error — try again'; document.getElementById('identBtn').textContent='Identify Product'; document.getElementById('identBtn').disabled=false; }
+}
+function closeScanner(){
+  document.getElementById('scanOv').classList.remove('open');
+  if(camStream){ camStream.getTracks().forEach(t=>t.stop()); camStream=null; }
+  capImg=null;
+  identBtnMode='identify';
+  const vid=document.getElementById('camVid'); if(vid) vid.style.display='none';
+  const prev=document.getElementById('camPrev'); if(prev) prev.style.display='none';
+  const acts=document.getElementById('scanActions'); if(acts) acts.style.display='none';
+  const shut=document.getElementById('shutterWrap'); if(shut) shut.style.display='flex';
+  const det=document.getElementById('scanDetected'); if(det) det.classList.remove('show');
+  document.getElementById('identBtn').textContent='Identify Product';
+  document.getElementById('manualIn').value='';
+}
+let identBtnMode = 'identify';
+
+function handleIdentBtn(){
+  if(identBtnMode === 'use') useManual();
+  else identifyProduct();
+}
+
+function useManual(){
+  const v=document.getElementById('manualIn').value.trim(); if(!v) return;
+  // Set input first, close scanner, then search
+  if(mode==='overpay'){
+    document.getElementById('opInput').value=v;
+    closeScanner();
+    setTimeout(doOverpay, 50);
+  } else {
+    document.getElementById('mainInput').value=v;
+    closeScanner();
+    setTimeout(doAnalyze, 50);
+  }
+}
+
+// ── TABS ──────────────────────────────────────────────────────
+var watchlist = [];
+try { watchlist = JSON.parse(localStorage.getItem('kart_watch') || '[]'); } catch(e) {}
+
+function showTab(tab) {
+  ['deals','watch','history'].forEach(function(t) {
+    document.getElementById('xpg-'+t).classList.remove('open');
+    document.getElementById('bti-'+t).classList.remove('active');
+  });
+  document.getElementById('bti-home').classList.remove('active');
+  var mb = document.getElementById('mobchat');
+  if(mb && !chatOpen) mb.style.display = 'flex';
+  var shell = document.querySelector('.shell');
+  if(tab === 'home') {
+    shell.style.display = '';
+    document.getElementById('bti-home').classList.add('active');
+  } else {
+    shell.style.display = 'none';
+    document.getElementById('xpg-'+tab).classList.add('open');
+    document.getElementById('bti-'+tab).classList.add('active');
+    if(tab === 'watch') renderWL();
+    if(tab === 'history') renderHI();
+  }
+}
+
+// ── WATCHLIST ────────────────────────────────────────────────
+function prodEmoji(name) {
+  var n = (name||'').toLowerCase();
+  if(/headphone|airpod|earbud|bose|jabra|xm/.test(n)) return '🎧';
+  if(/iphone|pixel|galaxy|phone/.test(n)) return '📱';
+  if(/macbook|laptop|computer|chromebook/.test(n)) return '💻';
+  if(/ipad|tablet|kindle/.test(n)) return '📲';
+  if(/tv|television|oled|monitor/.test(n)) return '📺';
+  if(/shoe|sneaker|jordan|air max|adidas|boot/.test(n)) return '👟';
+  if(/vacuum|dyson|roomba/.test(n)) return '🌀';
+  if(/watch|fitbit|garmin/.test(n)) return '⌚';
+  if(/camera|canon|nikon/.test(n)) return '📷';
+  if(/switch|playstation|xbox|ps5|gaming/.test(n)) return '🎮';
+  return '🛍️';
+}
+function saveWL() { try { localStorage.setItem('kart_watch', JSON.stringify(watchlist)); } catch(e) {} }
+function addToWatchlist() {
+  if(!curProd||!curProd.r) return;
+  var r = curProd.r;
+  watchlist.unshift({id:Date.now(), name:r.product_name||curProd.q,
+    cur:r.current_price, low:r.low_price, verdict:r.verdict,
+    date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})});
+  saveWL();
+  alert((r.product_name||curProd.q) + ' added to Watchlist!');
+}
+function removeWL(id) { watchlist = watchlist.filter(function(x){return x.id!==id;}); saveWL(); renderWL(); }
+function renderWL() {
+  var el = document.getElementById('wlContent'); if(!el) return;
+  if(!watchlist.length) {
+    el.innerHTML = '<div class="wl-empty"><div class="ei">👁</div><h3>Nothing tracked yet</h3><p>Search a product and tap<br>"+ Add to Watchlist".</p></div>';
+    return;
+  }
+  el.innerHTML = watchlist.map(function(w) { return '<div class="wl-card"><div class="wl-top"><div class="wl-emoji">'+prodEmoji(w.name)+'</div><div><div class="wl-name">'+w.name+'</div><div class="wl-date">Added '+w.date+'</div></div><div class="wl-rm" onclick="removeWL('+w.id+')">✕</div></div><div class="wl-prices"><div class="wlp"><div class="wlp-val cur">'+(w.cur?'$'+w.cur:'—')+'</div><div class="wlp-lbl">Current</div></div><div class="wlp"><div class="wlp-val lo">'+(w.low?'$'+w.low:'—')+'</div><div class="wlp-lbl">All-time low</div></div></div><div class="wl-verd '+(w.verdict||'')+'">'+(w.verdict||'—')+'</div></div>'; }).join('');
+}
+
+// ── HISTORY PAGE ─────────────────────────────────────────────
+function renderHI() {
+  var el = document.getElementById('hiContent'); if(!el) return;
+  if(!hist.length) {
+    el.innerHTML = '<div class="hi-empty"><div class="ei">🕐</div><h3>No searches yet</h3><p>Your search history<br>will appear here.</p></div>';
+    return;
+  }
+  var em = {Buy:'✅',Wait:'⏳',Avoid:'❌',overpaid:'💸','good-deal':'💰',fair:'👍'};
+  el.innerHTML = hist.map(function(h) {
+    var verdict = (h.verdict||'wait').toLowerCase().replace('-','');
+    return '<div class="hi-item" onclick="loadHI('+h.id+')"><div class="hi-icon '+verdict+'">'+(em[h.verdict]||'🔍')+'</div><div style="flex:1;min-width:0"><div class="hi-name">'+(h.name||h.q)+'</div><div class="hi-meta">'+(h.m==='overpay'?'Overpay · ':'')+h.date+'</div></div><div class="hi-tag '+verdict+'">'+(h.verdict||'—')+'</div></div>';
+  }).join('');
+}
+function loadHI(id) {
+  var h = hist.find(function(x){return x.id===id;}); if(!h) return;
+  showTab('home');
+  if(h.m==='overpay') { switchMode('overpay'); document.getElementById('opInput').value=h.q; curProd={q:h.q,r:h.r,mode:'overpay'}; renderOp(h.q,h.r); }
+  else { switchMode('shop'); document.getElementById('mainInput').value=h.q; curProd={q:h.q,loc:locStr(),r:h.r,mode:'shop'}; renderShop(h.q,locStr(),h.r); }
+}
+function clearHist() {
+  if(!confirm('Clear all history?')) return;
+  hist = [];
+  try { localStorage.removeItem('kartai_v6'); } catch(e) {}
+  renderHI();
+}
+
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
