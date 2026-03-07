@@ -8,6 +8,10 @@ export default async function handler(req, res) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'ANTHROPIC_API_KEY not set.' });
 
+  const webSearchTool = { name: 'web_search', type: 'web_search_20250305' };
+  const body = { ...req.body };
+  body.tools = Array.isArray(body.tools) ? [...body.tools, webSearchTool] : [webSearchTool];
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -16,7 +20,7 @@ export default async function handler(req, res) {
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(body)
     });
 
     const data = await response.json();
